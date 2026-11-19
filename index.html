@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tender Ecologies</title>
+<meta name="description" content="Tender Ecologies is a cultural publication dedicated to naming and examining the human capacities routinely dismissed as weakness: softness, delicacy, restraint, and other subtle forms of intelligence.">
+<link rel="canonical" href="https://www.tenderecologies.com/">
+<meta property="og:title" content="Tender Ecologies">
+<meta property="og:description" content="A journal of human capacities.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.tenderecologies.com/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@200;300;400&family=EB+Garamond:wght@400;500;600&family=Instrument+Sans:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --te-blue: #508FFF;
+    --te-ecru: #F5F5F5;
+    --te-black: #181818;
+    --te-taupe: #BCAAA4;
+    --te-taupe2: #D6D2D2;
+    --te-coral: #FF4A4A;
+    --te-orchid: #FECCFF;
+    --bg: #E9E9E9;
+    --muted: #8E8E8E;
+    --serif: "EB Garamond", Georgia, serif;
+    --mono: "Azeret Mono", ui-monospace, monospace;
+    --sans: "Instrument Sans", system-ui, sans-serif;
+    --gutter: clamp(20px, 2.8vw, 40px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--te-black);
+    font-family: var(--serif);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--te-blue); outline-offset: 3px; }
+
+  /* ---------- Top taglines ---------- */
+  .tagline {
+    position: absolute; top: 40px; z-index: 2;
+    font-family: var(--mono); font-weight: 200;
+    font-size: clamp(13px, 1.25vw, 18px); line-height: 1.333;
+    letter-spacing: -0.02em; color: #000;
+  }
+  .tagline--l { left: var(--gutter); width: 11em; }
+  .tagline--r { right: var(--gutter); width: 16.5em; text-align: right; }
+
+  /* ---------- Hero ---------- */
+  .page { position: relative; }
+  /* Figma: lockup is 776px wide, top edge at y=39 */
+  .hero {
+    width: min(776px, 92vw);
+    margin: 39px auto 0;
+  }
+  /* Flou hover: crisp static logo on top, a rippling ghost copy behind the wordmark only */
+  .logo { position: relative; isolation: isolate; width: 100%; aspect-ratio: 1553 / 1328; }
+  .logo img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .logo .base { z-index: 1; }
+  .logo .flower { position: absolute; inset: 0; display: block; opacity: 0; z-index: 0; pointer-events: none; will-change: filter; }
+  .logo .flower .m { position: absolute; inset: 0; display: block;
+    /* ghost lives on the lettering only: nothing above ~40%, so the flower never moves */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, transparent 40%, #000 48%, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, transparent 40%, #000 48%, #000 100%); }
+
+  /* Flou hover on issue titles: bold title stays crisp; a rippling ghost copy sits behind it */
+  .issue-title { position: relative; }
+  .issue-title .t-base { position: relative; z-index: 1; display: block; }
+  .issue-title .t-ghost { position: absolute; left: 0; right: 0; top: 0; z-index: 0; display: block; opacity: 0; pointer-events: none; will-change: filter; }
+
+  .intro {
+    width: min(670px, calc(100% - 2 * var(--gutter)));
+    margin: clamp(24px, 3vw, 44px) auto 0;
+    text-align: center;
+    font-size: clamp(18px, 1.67vw, 24px);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: #000;
+  }
+  .intro p + p { margin-top: 1.25em; }
+
+  .rule {
+    display: block; width: 94px; height: auto; margin: clamp(56px, 7.7vw, 111px) auto 0;
+  }
+
+  /* ---------- Issues ---------- */
+  .issues {
+    width: min(1129px, calc(100% - 2 * var(--gutter)));
+    margin: clamp(56px, 7.85vw, 113px) auto 0;
+    display: flex; flex-direction: column; gap: 120px;
+  }
+  .issue {
+    display: grid;
+    grid-template-columns: 555fr 440fr;
+    column-gap: clamp(32px, 9.4vw, 135px);
+    align-items: stretch;
+  }
+  .cover {
+    position: relative; overflow: hidden;
+    background: var(--te-taupe2); border-radius: var(--radius);
+    min-height: 260px;
+    --radius: 20px;
+  }
+  .cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+  /* soft edge: blurred inset blend into the page color, follows the rounded corners */
+  .cover::after {
+    content: ""; position: absolute; inset: -1px; pointer-events: none; border-radius: var(--radius);
+    box-shadow: inset 0 0 22px 12px var(--bg), inset 0 0 8px 4px var(--bg), inset 0 0 0 2px var(--bg);
+  }
+  .issue-body { display: flex; flex-direction: column; gap: 40px; }
+  .issue-head { display: flex; flex-direction: column; gap: 8px; line-height: 28px; }
+  .issue-no { font-family: var(--mono); font-weight: 300; font-size: 16px; letter-spacing: -0.01em; color: var(--te-black); }
+  .issue-title { font-weight: 600; font-size: 32px; color: var(--te-black); }
+  .issue-desc { font-weight: 500; font-size: 20px; line-height: 26px; color: var(--te-black); }
+  .issue-cta {
+    font-family: var(--mono); font-weight: 400; font-size: 16px; line-height: 28px;
+    letter-spacing: -0.01em; color: #000; text-decoration: none; width: fit-content;
+  }
+  a.issue-cta:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ---------- Footer ---------- */
+  .footer {
+    width: min(670px, calc(100% - 2 * var(--gutter)));
+    margin: clamp(96px, 16.7vw, 240px) auto 0; padding-bottom: clamp(80px, 12.8vw, 185px);
+    display: flex; flex-direction: column; align-items: center; gap: 80px;
+  }
+  .signup { width: 100%; display: flex; flex-direction: column; gap: 20px; align-items: center; }
+  .signup label, .contact-label {
+    font-family: var(--mono); font-weight: 300; font-size: 18px; line-height: 24px;
+    letter-spacing: -0.01em; text-align: center; color: #000;
+  }
+  .field {
+    width: 100%; display: flex; gap: 20px; align-items: center;
+    padding: 12px 16px; border: 1px solid var(--te-taupe); border-radius: 16px;
+  }
+  .field input {
+    flex: 1; min-width: 0; border: 0; background: transparent; outline: 0;
+    font-family: var(--mono); font-size: 18px; line-height: 24px; letter-spacing: -0.01em;
+    color: var(--te-black);
+  }
+  .field input::placeholder { color: var(--muted); opacity: 1; }
+  .field:focus-within { border-color: var(--te-blue); }
+  .field button {
+    font-family: var(--mono); font-size: 18px; line-height: 28px; letter-spacing: -0.01em;
+    background: var(--te-black); color: var(--te-ecru);
+    border: 0; border-radius: 12px; padding: 12px 16px; cursor: pointer;
+  }
+  .field button:hover { background: #000; }
+  .field button:disabled { opacity: .6; cursor: default; }
+  .form-msg { min-height: 24px; font-family: var(--mono); font-size: 14px; text-align: center; }
+  .contact { display: flex; flex-direction: column; gap: 12px; align-items: center; text-align: center; }
+  .contact a { font-weight: 500; font-size: 24px; line-height: 28px; text-decoration: none; color: var(--te-black); }
+  .contact a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .tagline { top: 20px; font-size: 12px; }
+    .hero { margin-top: 84px; }
+    .issues { margin-top: 72px; gap: 72px; }
+    .issue { grid-template-columns: 1fr; row-gap: 28px; }
+    .cover { aspect-ratio: 16 / 10; min-height: 0; }
+    .issue-body { gap: 28px; }
+    .issue-title { font-size: 28px; }
+    .rule { margin-top: 48px; }
+    .footer { margin-top: 96px; gap: 56px; }
+  }
+  @media (max-width: 480px) {
+    .field { flex-wrap: wrap; }
+    .field input { flex-basis: 100%; }
+    .field button { width: 100%; }
+    .signup label, .contact-label, .field input, .field button { font-size: 16px; }
+    .contact a { font-size: 20px; }
+  }
+  /* Liquid thumbnails: a WebGL copy of the artwork sits over the <img> while the cursor stirs it */
+  .cover canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity .6s ease; }
+  .cover.live canvas { opacity: 1; transition: none; }   /* fade out at rest so the hand-off to <img> never snaps */
+</style>
+</head>
+<body>
+<!-- SVG filter for the liquid flower ghost -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="liquid" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+    <feTurbulence id="turb" type="fractalNoise" baseFrequency="0.010 0.016" numOctaves="2" seed="4" result="n"/>
+    <feDisplacementMap id="disp" in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feGaussianBlur id="blur" in="d" stdDeviation="0"/>
+  </filter>
+  <filter id="liquid-text" x="-15%" y="-60%" width="130%" height="220%" color-interpolation-filters="sRGB">
+    <feTurbulence id="turb-t" type="fractalNoise" baseFrequency="0.022 0.034" numOctaves="2" seed="7" result="n"/>
+    <feDisplacementMap id="disp-t" in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feGaussianBlur id="blur-t" in="d" stdDeviation="0"/>
+  </filter>
+  <!-- colour echoes: same liquid ripple, then the ink is replaced by a flat TE colour -->
+  <filter id="liquid-blue" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+    <feTurbulence id="turb-b" type="fractalNoise" baseFrequency="0.011 0.015" numOctaves="2" seed="11" result="n"/>
+    <feDisplacementMap id="disp-b" in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feGaussianBlur id="blur-b" in="d" stdDeviation="0" result="bl"/>
+    <feFlood flood-color="#508FFF" result="c"/>
+    <feComposite in="c" in2="bl" operator="in"/>
+  </filter>
+  <filter id="liquid-orchid" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
+    <feTurbulence id="turb-o" type="fractalNoise" baseFrequency="0.009 0.017" numOctaves="2" seed="19" result="n"/>
+    <feDisplacementMap id="disp-o" in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G" result="d"/>
+    <feGaussianBlur id="blur-o" in="d" stdDeviation="0" result="bl"/>
+    <feFlood flood-color="#FECCFF" result="c"/>
+    <feComposite in="c" in2="bl" operator="in"/>
+  </filter>
+</svg>
+<div class="page">
+  <p class="tagline tagline--l">A journal of human capacities</p>
+  <p class="tagline tagline--r">- often dismissed, rarely named, always in use.</p>
+
+  <header class="hero">
+    <h1 class="logo" id="logo">
+      <span class="flower" aria-hidden="true"><span class="m"><img src="assets/botanical-flower72.png" alt=""></span></span>
+      <img class="base" src="assets/botanical-flower72.png" alt="Tender Ecologies" width="1553" height="1532">
+    </h1>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p>Tender Ecologies is a cultural publication dedicated to naming and examining the human capacities routinely dismissed as weakness: softness, delicacy, restraint, and other subtle forms of intelligence.</p>
+      <p>Through essays, visual work, and interviews, it develops language for lived experiences that rarely receive sustained cultural attention.</p>
+    </section>
+
+    <img class="rule" src="assets/rule.svg" alt="" width="94" height="2">
+
+    <section class="issues" aria-label="Issues">
+      <article class="issue">
+        <div class="cover"><img src="assets/issue-1-thumb.jpg" alt="Issue #1, In Defense of Softness" onerror="this.remove()"></div>
+        <div class="issue-body">
+          <div class="issue-head">
+            <p class="issue-no">Issue #1</p>
+            <h2 class="issue-title">In Defense of Softness</h2>
+          </div>
+          <p class="issue-desc">What if softness is not the opposite of strength, but a form of intelligence in its own right? Moving between desire, motherhood, sexuality, grief, and the politics of the body, this issue explores softness as a force of resistance. An inquiry into the messier, more unruly parts of being human - and what they make possible.</p>
+          <a class="issue-cta" href="assets/tender-ecologies-issue-1.pdf" download>Download Issue →</a>
+        </div>
+      </article>
+
+      <article class="issue">
+        <div class="cover"><img src="assets/issue-2-thumb.jpg" alt="Issue #2, In Defense of Delicacy" style="object-position:50% 52%" onerror="this.remove()"></div>
+        <div class="issue-body">
+          <div class="issue-head">
+            <p class="issue-no">Issue #2</p>
+            <h2 class="issue-title">In Defense of Delicacy</h2>
+          </div>
+          <p class="issue-desc">We have learned to value what can be measured, scaled, and achieved alone. But what gets lost when individual excellence becomes the measure of everything? Moving through the textures, lures, fantasies, and displacements of food, this issue explores delicacy as a form of human intelligence - revealing the worlds we inherit, the desires that shape us, and what it means to belong.</p>
+          <span class="issue-cta">Coming Soon</span>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <form class="signup" id="signup" novalidate
+          data-buttondown=""><!-- TODO: put your Buttondown username here, e.g. data-buttondown="tenderecologies" -->
+      <label for="email">Sign up for News and Updates</label>
+      <div class="field">
+        <input id="email" name="email" type="email" placeholder="Email Address" autocomplete="email" required>
+        <button type="submit">Submit</button>
+      </div>
+      <p class="form-msg" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="contact">
+      <p class="contact-label">Write to Us</p>
+      <a href="mailto:hello@tenderecologies.com">hello@tenderecologies.com</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var form = document.getElementById('signup');
+    var msg = form.querySelector('.form-msg');
+    var btn = form.querySelector('button');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = form.email.value.trim();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        msg.textContent = 'Please enter a valid email address.';
+        return;
+      }
+      var user = form.dataset.buttondown;
+      if (!user) {
+        msg.textContent = 'Sign-up isn’t connected yet.';
+        return;
+      }
+      btn.disabled = true;
+      // Buttondown's embed endpoint doesn't allow cross-site reads (CORS), so the reply is
+      // opaque: we can only tell whether the request was sent, not what Buttondown said.
+      fetch('https://buttondown.com/api/emails/embed-subscribe/' + encodeURIComponent(user), {
+        method: 'POST',
+        mode: 'no-cors',
+        body: new URLSearchParams({ email: email, embed: '1' })
+      }).then(function () {
+        form.reset();
+        msg.textContent = 'Thank you — check your inbox to confirm.';
+      }).catch(function () {
+        msg.textContent = 'Something went wrong. Please try again.';
+      }).finally(function () { btn.disabled = false; });
+    });
+  })();
+</script>
+<script>
+/* Flou hover: ghosted, liquid typography (inspired by the zine's blurred quotes) */
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var demo = location.search.indexOf('demo') > -1;
+
+  /* Flower: crisp logo stays static; a rippling, drop-shadowed ghost copy eases in behind it */
+  var logo = document.getElementById('logo');
+  var flower = logo.querySelector('.flower');
+  var turb = document.getElementById('turb'), disp = document.getElementById('disp'), blur = document.getElementById('blur');
+  var target = 0, amp = 0, raf = null, t0 = performance.now();
+  var MAX_SCALE = 44, MAX_BLUR = 1.1, GHOST = 0.45;   // GHOST = strength of the moving echo (0–1)
+
+  function frame(now) {
+    amp += (target - amp) * (target > amp ? 0.035 : 0.025);
+    var t = (now - t0) / 1000;
+    if (Math.abs(target - amp) < 0.002) amp = target;
+    if (amp > 0) {
+      turb.setAttribute('baseFrequency', (0.010 + Math.sin(t * .3) * .0025).toFixed(5) + ' ' + (0.016 + Math.cos(t * .22) * .003).toFixed(5));
+      disp.setAttribute('scale', (amp * MAX_SCALE).toFixed(2));
+      blur.setAttribute('stdDeviation', (amp * MAX_BLUR).toFixed(2));
+      flower.style.opacity = (Math.min(1, amp * 1.2) * GHOST).toFixed(3);
+      flower.style.filter = 'url(#liquid) drop-shadow(' + (amp * 9).toFixed(1) + 'px ' + (amp * -7).toFixed(1) + 'px ' + (amp * 5).toFixed(1) + 'px rgba(24,24,24,' + (amp * .3).toFixed(2) + '))';
+    }
+    if (amp === 0 && target === 0) { flower.style.filter = 'none'; flower.style.opacity = 0; raf = null; return; }
+    raf = requestAnimationFrame(frame);
+  }
+  function setFlower(v) { if (reduce) return; target = v; if (!raf) raf = requestAnimationFrame(frame); }
+  logo.addEventListener('mouseenter', function () { setFlower(1); });
+  logo.addEventListener('mouseleave', function () { setFlower(0); });
+  if (demo) { amp = 1; setFlower(1); }
+
+  /* Issue titles: same recipe as the logo. Crisp title on top; rippling, offset ghost copy behind it */
+  var turbT = document.getElementById('turb-t'), dispT = document.getElementById('disp-t'), blurT = document.getElementById('blur-t');
+  var T_SCALE = 15, T_BLUR = 0.7, T_GHOST = 0.5;
+  var titles = [], tRaf = null, tLast = performance.now(), tStart = tLast;
+
+  document.querySelectorAll('.issue-title').forEach(function (el) {
+    var text = el.textContent.trim();
+    el.setAttribute('aria-label', text);
+    el.textContent = '';
+    var base = document.createElement('span'); base.className = 't-base'; base.textContent = text; base.setAttribute('aria-hidden', 'true');
+    var ghost = document.createElement('span'); ghost.className = 't-ghost'; ghost.textContent = text; ghost.setAttribute('aria-hidden', 'true');
+    el.appendChild(ghost); el.appendChild(base);
+    var st = { el: el, ghost: ghost, target: 0, amp: demo ? 1 : 0 };
+    titles.push(st);
+    el.addEventListener('mouseenter', function () { if (!reduce) { st.target = 1; tWake(); } });
+    el.addEventListener('mouseleave', function () { st.target = 0; tWake(); });
+  });
+
+  function tFrame(now) {
+    var t = (now - tStart) / 1000, maxAmp = 0, busy = false;
+    titles.forEach(function (s) {
+      s.amp += (s.target - s.amp) * (s.target > s.amp ? 0.035 : 0.025);
+      if (Math.abs(s.target - s.amp) < 0.002) s.amp = s.target;
+      if (s.amp > maxAmp) maxAmp = s.amp;
+      if (s.amp > 0 || s.target > 0) busy = true;
+    });
+    // one shared filter: its strength follows the most active title
+    turbT.setAttribute('baseFrequency', (0.022 + Math.sin(t * .3) * .004).toFixed(5) + ' ' + (0.034 + Math.cos(t * .22) * .005).toFixed(5));
+    dispT.setAttribute('scale', (maxAmp * T_SCALE).toFixed(2));
+    blurT.setAttribute('stdDeviation', (maxAmp * T_BLUR).toFixed(2));
+    titles.forEach(function (s) {
+      if (s.amp > 0) {
+        s.ghost.style.opacity = (Math.min(1, s.amp * 1.2) * T_GHOST).toFixed(3);
+        s.ghost.style.filter = 'url(#liquid-text) drop-shadow(' + (s.amp * 5).toFixed(1) + 'px ' + (s.amp * -3).toFixed(1) + 'px ' + (s.amp * 3).toFixed(1) + 'px rgba(24,24,24,' + (s.amp * .3).toFixed(2) + '))';
+      } else { s.ghost.style.opacity = 0; s.ghost.style.filter = 'none'; }
+    });
+    if (busy) tRaf = requestAnimationFrame(tFrame); else tRaf = null;
+  }
+  function tWake() { if (!tRaf) tRaf = requestAnimationFrame(tFrame); }
+  if (demo) tWake();
+})();
+</script>
+<script>
+/* Colour echoes: TE-Blue and TE-Orchid echoes. Clones of the black ghost, each with its own ripple, colour and offset.
+   Opacity: black 0.45 (unchanged) < blue < orchid, i.e. each colour is less transparent than the one before. */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var logo = document.getElementById('logo'), black = logo.querySelector('.flower');
+  var L = [
+    { k: 'b', name: 'TE-Blue',   op: 0.22, dx:   0, dy: -8, scale: 52, blur: 1.4, ph: 1.7 },
+    { k: 'o', name: 'TE-Orchid', op: 0.55, dx:   4, dy: 16, scale: 60, blur: 1.8, ph: 3.1 }
+  ];
+  var before = black;
+  L.forEach(function (l) {             // blue sits just behind black, orchid furthest back
+    l.el = black.cloneNode(true); l.el.classList.add('ghost-' + l.k);
+    logo.insertBefore(l.el, before); before = l.el;
+    l.turb = document.getElementById('turb-' + l.k); l.disp = document.getElementById('disp-' + l.k); l.blurEl = document.getElementById('blur-' + l.k);
+  });
+  var target = 0, amp = 0, raf = null, t0 = performance.now();
+  function frame(now) {
+    amp += (target - amp) * (target > amp ? 0.035 : 0.025);
+    if (Math.abs(target - amp) < 0.002) amp = target;
+    var t = (now - t0) / 1000;
+    L.forEach(function (l) {
+      if (amp > 0) {
+        l.turb.setAttribute('baseFrequency', (0.010 + Math.sin(t * .27 + l.ph) * .003).toFixed(5) + ' ' + (0.016 + Math.cos(t * .2 + l.ph) * .003).toFixed(5));
+        l.disp.setAttribute('scale', (amp * l.scale).toFixed(2));
+        l.blurEl.setAttribute('stdDeviation', (amp * l.blur).toFixed(2));
+        l.el.style.opacity = (Math.min(1, amp * 1.2) * l.op).toFixed(3);
+        l.el.style.filter = 'url(#liquid-' + (l.k === 'b' ? 'blue' : 'orchid') + ')';
+        l.el.style.transform = 'translate(' + (amp * l.dx).toFixed(1) + 'px,' + (amp * l.dy).toFixed(1) + 'px)';
+      } else { l.el.style.opacity = 0; l.el.style.filter = 'none'; l.el.style.transform = ''; }
+    });
+    if (amp === 0 && target === 0) { raf = null; return; }
+    raf = requestAnimationFrame(frame);
+  }
+  function set(v) { target = v; if (!raf) raf = requestAnimationFrame(frame); }
+  logo.addEventListener('mouseenter', function () { set(1); });
+  logo.addEventListener('mouseleave', function () { set(0); });
+  if (location.search.indexOf('demo') > -1) { amp = 1; set(1); }
+})();
+</script>
+<script>
+/* Liquid thumbnails. The cursor parts the artwork like a finger drawn through paint:
+   colour is pushed aside from its path, dragged a little along it, a faint channel opens behind it,
+   and everything flows back together. Colours of the artwork are never changed. */
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var K = { split: 20, radius: 80, drag: 36, ripple: 2, heal: 2, gap: 0.15 };   // tuning knobs (heal = seconds to fully settle)
+  var MAX = 96;
+  var VS = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
+  var FS = [
+    'precision highp float;',
+    'uniform sampler2D uTex;uniform vec2 uRes;uniform float uDpr;uniform vec4 uCover;',
+    'uniform vec4 uP[' + MAX + '];uniform int uN;',                    // per point: x, y, direction (radians), strength q
+    'uniform float uSplit,uRad,uDrag,uRipple,uGap;uniform vec3 uBg;',
+    'void main(){',
+    ' vec2 pos=vec2(gl_FragCoord.x,uRes.y*uDpr-gl_FragCoord.y)/uDpr;',
+    ' vec2 off=vec2(0.);float gap=0.;',
+    ' for(int i=0;i<' + MAX + ';i++){ if(i>=uN)break;',
+    '  vec4 p=uP[i];float q=p.w;if(q<=0.)continue;',                 // q = speed x remaining life, eases to exactly 0
+    '  vec2 dir=vec2(cos(p.z),sin(p.z));vec2 perp=vec2(-dir.y,dir.x);',
+    '  float qc=min(q,1.);',
+    '  vec2 d=pos-p.xy;float r=uRad*(1.+(1.-qc)*.5);',                 // the wake widens as it relaxes
+    '  float fall=exp(-dot(d,d)/(r*r));',
+    '  float sd=dot(d,perp);float side=sd/(abs(sd)+r*.15);',          // smooth "which side of the path"
+    '  float amt=q*fall;',
+    '  off+=perp*side*uSplit*amt+dir*uDrag*amt;',
+    '  float dist=length(d);',
+    '  off+=(d/(dist+1.))*sin(dist*.09+qc*3.)*uRipple*qc*qc*exp(-dist*dist/(r*r*4.));',   // ripple fades out faster than the push, no wobble
+    '  float al=dot(d,dir);',
+    '  gap=max(gap,exp(-sd*sd/(r*r*.03))*exp(-al*al/(r*r*.5))*qc);',
+    ' }',
+    ' vec2 uv=(pos-off-uCover.xy)/uCover.zw;',
+    ' vec3 c=texture2D(uTex,uv).rgb;',
+    ' c=mix(c,uBg,clamp(gap*uGap,0.,1.));',
+    ' gl_FragColor=vec4(c,1.);',
+    '}'].join('\n');
+
+  var bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#E9E9E9';
+  var bgv = [1, 3, 5].map(function (i) { return parseInt(bg.substr(i, 2), 16) / 255; });
+
+  function setup(cover) {
+    var img = cover.querySelector('img');
+    var cv = document.createElement('canvas'); cover.insertBefore(cv, img.nextSibling);
+    var gl = cv.getContext('webgl', { premultipliedAlpha: false, antialias: false });
+    if (!gl) { cv.remove(); return; }
+    function sh(t, s) { var o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o);
+      if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(o)); return o; }
+    var pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, VS)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, FS));
+    gl.linkProgram(pr); gl.useProgram(pr);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    var al = gl.getAttribLocation(pr, 'a'); gl.enableVertexAttribArray(al); gl.vertexAttribPointer(al, 2, gl.FLOAT, false, 0, 0);
+    var U = {}; ['uRes', 'uDpr', 'uCover', 'uP', 'uN', 'uSplit', 'uRad', 'uDrag', 'uRipple', 'uGap', 'uBg']
+      .forEach(function (n) { U[n] = gl.getUniformLocation(pr, n); });
+    var tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+    [gl.TEXTURE_WRAP_S, gl.TEXTURE_WRAP_T].forEach(function (w) { gl.texParameteri(gl.TEXTURE_2D, w, gl.CLAMP_TO_EDGE); });
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    var ready = false;
+    function upload() {                                       // blocked when opened from disk (file://): stay a still image
+      try { gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img); ready = !gl.getError(); } catch (e) { ready = false; }
+      if (!ready) cv.remove();
+    }
+    if (img.complete) upload(); else img.addEventListener('load', upload);
+
+    var W, H, dpr;
+    function size() {
+      var r = cover.getBoundingClientRect(); W = r.width; H = r.height; dpr = Math.min(2, window.devicePixelRatio || 1);
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); gl.viewport(0, 0, cv.width, cv.height);
+    }
+    size(); window.addEventListener('resize', size);
+
+    var pts = [], last = null, raf = null;
+    function add(x, y, now) {
+      if (!ready) return;
+      if (last) {
+        var dx = x - last.x, dy = y - last.y, dt = Math.max(8, now - last.t);
+        if (dx * dx + dy * dy < 9) return;                       // only every ~3 px
+        var vx = dx / dt, vy = dy / dt;
+        if (last.vx != null) { vx = vx * .6 + last.vx * .4; vy = vy * .6 + last.vy * .4; }
+        var s = Math.min(1, Math.hypot(vx, vy) / 1.2);              // speed in px/ms, 1.2 = a quick flick
+        pts.push({ x: x, y: y, a: Math.atan2(vy, vx), w: s, t: now });
+        if (pts.length > MAX) {                                      // long stroke: merge the two oldest points
+          var p0 = pts.shift(), p1 = pts[0], W = p0.w + p1.w || 1;   // instead of dropping one, so nothing jumps
+          pts[0] = { x: (p0.x * p0.w + p1.x * p1.w) / W, y: (p0.y * p0.w + p1.y * p1.w) / W, a: p1.a, w: p0.w + p1.w, t: (p0.t + p1.t) / 2 };
+        }
+        last = { x: x, y: y, t: now, vx: vx, vy: vy };
+      } else last = { x: x, y: y, t: now };
+      cover.classList.add('live'); if (!raf) raf = requestAnimationFrame(draw);
+    }
+    cover.addEventListener('pointermove', function (e) { var r = cover.getBoundingClientRect(); add(e.clientX - r.left, e.clientY - r.top, performance.now()); });
+    cover.addEventListener('pointerleave', function () { last = null; });
+
+    function draw(now) {
+      pts = pts.filter(function (p) { return now - p.t < K.heal * 1000; });
+      var P = new Float32Array(MAX * 4);
+      pts.forEach(function (p, i) {
+        var u = (now - p.t) / (K.heal * 1000), life = 1 - u * u * (3 - 2 * u);   // smoothstep: starts and lands gently at 0
+        P.set([p.x, p.y, p.a, p.w * life], i * 4);
+      });
+      var iw = img.naturalWidth, ih = img.naturalHeight, sc = Math.max(W / iw, H / ih), dw = iw * sc, dh = ih * sc;
+      gl.uniform2f(U.uRes, W, H); gl.uniform1f(U.uDpr, dpr);
+      gl.uniform4f(U.uCover, (W - dw) * .5, (H - dh) * .6, dw, dh);   // matches object-fit: cover; object-position: 50% 60%
+      gl.uniform4fv(U.uP, P); gl.uniform1i(U.uN, pts.length);
+      gl.uniform1f(U.uSplit, K.split); gl.uniform1f(U.uRad, K.radius); gl.uniform1f(U.uDrag, K.drag);
+      gl.uniform1f(U.uRipple, K.ripple); gl.uniform1f(U.uGap, K.gap);
+      gl.uniform3f(U.uBg, bgv[0], bgv[1], bgv[2]);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      if (pts.length) raf = requestAnimationFrame(draw);
+      else { raf = null; cover.classList.remove('live'); }       // fully healed: crossfade back to the plain <img>
+    }
+    return { add: add, size: size };
+  }
+
+  var covers = [].slice.call(document.querySelectorAll('.cover')).map(setup);
+
+  // ?demo: a looping stroke across the first thumbnail (headless screenshots can't hover)
+  if (location.search.indexOf('demo') > -1 && covers[0]) {
+    var c0 = document.querySelector('.cover'), t0 = performance.now();
+    (function loop(now) {
+      var r = c0.getBoundingClientRect(), k = ((now - t0) % 1600) / 1600;
+      if (k < .5) { var u = k / .5; covers[0].add(r.width * (.12 + .76 * u), r.height * (.3 + .35 * u + Math.sin(u * 3.2) * .12), now); }
+      requestAnimationFrame(loop);
+    })(t0);
+  }
+})();
+</script>
+</body>
+</html>
